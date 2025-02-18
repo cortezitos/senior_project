@@ -30,30 +30,22 @@ export default function DefaultLayout() {
 
 	return(
 	<div id="defaultLayout">
-		<aside>
-			<Link to="/dashboard">Dashboard</Link>
-			{user.role === 'admin' && (
-				<Link to="/users">Users</Link>
-			)}
-			<Link to="/phonebook">Phonebook</Link>
-		</aside>
-		<div className="content">
-			<header>
-				<div>
-					Header
-				</div>
-				<div>
-					{user.name}
-					<a href="#" onClick={onLogout} className="btn-logout">Logout</a>
-				</div>
-			</header>
-			<main>
-				<Outlet />
-			</main>
+		<div className="header-container">
+			<nav>
+				<Link to="/dashboard">Dashboard</Link>
+				{user.role === 'admin' && (
+					<Link to="/users">Users</Link>
+				)}
+				<Link to="/phonebook">Phonebook</Link>
+			</nav>
+			<div className="user-info">
+				{user.name}
+				<a href="#" onClick={onLogout} className="btn-logout">Logout</a>
+			</div>
 		</div>
+		<main className="content">
+			<Outlet />
+		</main>
 	</div>
-
-	) 
-
-
+	)
 }
