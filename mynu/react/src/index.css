@@ -1,0 +1,281 @@
+#defaultLayout {
+    display: flex;
+}
+
+#defaultLayout aside {
+    width: 240px;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+    min-height: 100vh;
+}
+
+#defaultLayout aside a {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    text-decoration: none;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    color: #333;
+}
+
+#defaultLayout aside a:hover {
+    background-color: #d0d0d0;
+}
+
+#defaultLayout .content {
+    flex: 1;
+}
+
+#defaultLayout header {
+    padding: 15px 20px;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-logout {
+    display: inline-block;
+    padding: 5px 15px;
+    text-decoration: none;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    color: #333;
+    margin-left: 15px;
+}
+
+.btn-logout:hover {
+    background-color: #d0d0d0;
+}
+
+/* Login/Signup Form Styles */
+.login-signup-form {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-signup-form .form {
+    width: 360px;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-signup-form .form input {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.login-signup-form .form input:focus {
+    outline: none;
+    border-color: #5b08a7;
+}
+
+.btn {
+    background-color: #5b08a7;
+    color: white;
+    padding: 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background-color: #4a0789;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.login-signup-form .message {
+    margin-top: 20px;
+    text-align: center;
+    color: #666;
+}
+
+.login-signup-form .message a {
+    color: #5b08a7;
+    text-decoration: none;
+}
+
+.login-signup-form .message a:hover {
+    text-decoration: underline;
+}
+
+/* Animation */
+.animated {
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fadeInDown {
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-signup-form .form h1.title {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.login-signup-form .alert {
+    color: white;
+    margin-bottom: 15px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    background-color: red;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.btn-add {
+    display: inline-block;
+    padding: 10px 15px;
+    text-decoration: none;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    color: #333;
+}
+
+.btn-edit,
+.btn-delete {
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    width: 70px;
+    text-align: center;
+}
+
+.btn-edit {
+    background-color: #2ecc71;
+}
+
+.btn-edit:hover {
+    background-color: #27ae60;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+}
+
+.card {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.card table th, .card table td {
+    padding: 10px;
+    text-align: left;
+}
+
+.card table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.card table tbody tr:hover {
+    background-color: #e0e0e0;
+}
+
+.card table tbody tr td a {
+    display: inline-block;
+    padding: 5px 10px;
+    text-decoration: none;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    color: #333;
+}
+
+.card form input,
+.card form select {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.card form input:focus,
+.card form select:focus {
+    outline: none;
+    border-color: #2ecc71;
+}
+
+.card form button {
+    margin-top: 10px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.pagination-button {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination-button:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination-button.active {
+    background-color: #5b08a7;
+    color: white;
+    border-color: #5b08a7;
+}
