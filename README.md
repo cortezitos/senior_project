@@ -15,8 +15,8 @@ Before you begin, ensure you have the following installed:
 
 ### 1. Clone the Repository
 ```bash
-git clone <your-repository-url>
-cd <project-directory>
+git clone https://github.com/cortezitos/senior_project
+cd senior_project
 ```
 
 ### 2. Backend Setup (Laravel)
