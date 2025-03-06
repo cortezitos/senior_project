@@ -47,4 +47,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get all clubs that the user is a member of
+     */
+    public function clubs()
+    {
+        return $this->belongsToMany(Club::class, 'club_members')
+                    ->withPivot('role', 'joined_at')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Get user's club memberships
+     */
+    public function clubMemberships()
+    {
+        return $this->hasMany(ClubMember::class);
+    }
 }

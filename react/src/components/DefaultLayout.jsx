@@ -34,8 +34,12 @@ export default function DefaultLayout() {
 			<nav>
 				<Link to="/dashboard">Dashboard</Link>
 				{user.role === 'admin' && (
-					<Link to="/users">Users</Link>
+					<>
+						<Link to="/users">Users</Link>
+						<Link to="/manage-clubs">Manage Clubs</Link>
+					</>
 				)}
+				<Link to="/clubs">Clubs</Link>
 				<Link to="/phonebook">Phonebook</Link>
 			</nav>
 			<div className="user-info">

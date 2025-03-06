@@ -26,6 +26,11 @@ class StoreUserRequest extends FormRequest
             'name' => 'required|string|max:55',
             'email' => 'required|email|unique:users',
             'password' => ['required', Password::min(8)],
+            'role' => 'required|in:student,admin',
+            'school' => 'required|string|max:55',
+            'major' => 'required|string|max:55',
+            'year_of_study' => 'required|integer|min:1|max:4',
         ];
     }
 }
+

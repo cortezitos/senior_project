@@ -11,6 +11,10 @@ import Dashboard from "./views/Dashboard.jsx";
 import UserForm from "./views/UserForm.jsx";
 import Phonebook from "./views/Phonebook.jsx";
 import Profile from "./views/Profile.jsx";
+import Clubs from "./views/Clubs.jsx";
+import EditClubs from "./views/EditClubs.jsx";
+import ClubForm from "./views/ClubForm.jsx";
+import ClubMemberForm from "./views/ClubMemberForm.jsx";
 
 const router = createBrowserRouter([
 	{
@@ -28,6 +32,10 @@ const router = createBrowserRouter([
 			{
 				path: '/phonebook',
 				element: <Phonebook />
+			},
+			{
+				path: '/clubs',
+				element: <Clubs />
 			},
 			{
 				path: '/profile',
@@ -52,6 +60,22 @@ const router = createBrowserRouter([
 						path: '/users/:id',
 						element: <UserForm key="userUpdate" />
 					},
+					{
+						path: '/manage-clubs',
+						element: <EditClubs />
+					},
+					{
+						path: '/manage-clubs/new',
+						element: <ClubForm key="clubCreate" />
+					},
+					{
+						path: '/manage-clubs/:id/edit',
+						element: <ClubForm key="clubUpdate" />
+					},
+					{
+						path: '/manage-clubs/:id/members',
+						element: <ClubMemberForm />
+					}
 				]
 			}
 		]
