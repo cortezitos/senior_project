@@ -39,7 +39,8 @@ export default function DefaultLayout() {
 				<Link to="/phonebook">Phonebook</Link>
 			</nav>
 			<div className="user-info">
-				{user.name}
+
+				<Link to="/profile">{user.name}</Link>
 				<a href="#" onClick={onLogout} className="btn-logout">Logout</a>
 			</div>
 		</div>

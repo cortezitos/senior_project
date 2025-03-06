@@ -10,6 +10,7 @@ import AdminLayout from "./components/AdminLayout.jsx";
 import Dashboard from "./views/Dashboard.jsx";
 import UserForm from "./views/UserForm.jsx";
 import Phonebook from "./views/Phonebook.jsx";
+import Profile from "./views/Profile.jsx";
 
 const router = createBrowserRouter([
 	{
@@ -27,6 +28,14 @@ const router = createBrowserRouter([
 			{
 				path: '/phonebook',
 				element: <Phonebook />
+			},
+			{
+				path: '/profile',
+				element: <Profile />
+			},
+			{
+				path: '/profile/:id',
+				element: <Profile />
 			},
 			{
 				element: <AdminLayout />,

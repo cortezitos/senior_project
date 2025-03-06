@@ -60,6 +60,9 @@ export default function Users() {
 							<th>Name</th>
 							<th>Email</th>
 							<th>Role</th>
+							<th>School</th>
+							<th>Major</th>
+							<th>Year</th>
 							<th>Created At</th>
 							<th>Actions</th>
 						</tr>
@@ -67,7 +70,7 @@ export default function Users() {
 					{loading && (
 						<tbody>
 							<tr>
-								<td colSpan="6" className="text-center">
+								<td colSpan="9" className="text-center">
 									Loading...
 								</td>
 							</tr>
@@ -78,9 +81,16 @@ export default function Users() {
 							{users.map((u) => (
 								<tr key={u.id}>
 									<td>{u.id}</td>
-									<td>{u.name}</td>
+									<td>
+										<Link to={`/profile/${u.id}`} className="name-link">
+											{u.name}
+										</Link>
+									</td>
 									<td>{u.email}</td>
 									<td>{u.role}</td>
+									<td>{u.role === 'student' ? u.school : '-'}</td>
+									<td>{u.role === 'student' ? u.major : '-'}</td>
+									<td>{u.role === 'student' ? u.year_of_study : '-'}</td>
 									<td>{u.created_at}</td>
 									<td>
 										<Link className="btn-edit" to={`/users/${u.id}`}>Edit</Link>

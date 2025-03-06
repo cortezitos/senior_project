@@ -27,6 +27,9 @@ class UpdateUserRequest extends FormRequest
             'email' => 'required|email|unique:users,email,' . $this->id,
             'password' => [Password::min(8)],
             'role' => 'required|in:student,admin',
+            'school' => 'required|string|max:55',
+            'major' => 'required|string|max:55',
+            'year_of_study' => 'required|integer|min:1|max:4',
         ];
     }
 }

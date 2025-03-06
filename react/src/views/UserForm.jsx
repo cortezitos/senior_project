@@ -2,7 +2,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axiosClient from "../axios-client";
 
-
 export default function UserForm() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -14,6 +13,14 @@ export default function UserForm() {
         email: '',
         password: '',
         role: 'student',
+        year_of_study: '',
+        major: '',
+        school: ''
+    });
+
+    const [majors, setMajors] = useState({
+        SEDS: ['Computer Science', 'Chemical Engineering'],
+        SSH: ['Mathematics', 'Physics', 'Chemistry']
     });
 
     if (id) {
@@ -73,14 +80,48 @@ export default function UserForm() {
                 {!loading && 
                 <form onSubmit={onSubmit}>
                     <input value={user.name} onChange={(ev) => setUser({...user, name: ev.target.value})} placeholder="Name"/>
-                    <input type= 'email' value={user.email} onChange={(ev) => setUser({...user, email: ev.target.value})} placeholder="Email"/>
-                    <input type = "password" onChange={(ev) => setUser({...user, password: ev.target.value})} placeholder="Password"/>
-                    {user.id && (
-                        <select value={user.role} onChange={(ev) => setUser({...user, role: ev.target.value})}>
-                            <option value="student">Student</option>
-                            <option value="admin">Admin</option>
-                        </select>
+                    <input type="email" value={user.email} onChange={(ev) => setUser({...user, email: ev.target.value})} placeholder="Email"/>
+                    <input type="password" onChange={(ev) => setUser({...user, password: ev.target.value})} placeholder="Password"/>
+                    <select value={user.role} onChange={(ev) => setUser({...user, role: ev.target.value})}>
+                        <option value="student">Student</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    
+                    {user.role === 'student' && (
+                        <>
+                            <select 
+                                value={user.year_of_study} 
+                                onChange={(ev) => setUser({...user, year_of_study: ev.target.value})}
+                            >
+                                <option value="">Select Year of Study</option>
+                                {[1, 2, 3, 4, 5, 6].map((year) => (
+                                    <option key={year} value={year}>Year {year}</option>
+                                ))}
+                            </select>
+
+                            <select 
+                                value={user.school} 
+                                onChange={(ev) => setUser({...user, school: ev.target.value, major: ''})}
+                            >
+                                <option value="">Select School</option>
+                                <option value="SEDS">SEDS</option>
+                                <option value="SSH">SSH</option>
+                            </select>
+
+                            {user.school && (
+                                <select 
+                                    value={user.major} 
+                                    onChange={(ev) => setUser({...user, major: ev.target.value})}
+                                >
+                                    <option value="">Select Major</option>
+                                    {majors[user.school].map((major) => (
+                                        <option key={major} value={major}>{major}</option>
+                                    ))}
+                                </select>
+                            )}
+                        </>
                     )}
+                    
                     <button className="btn">Save</button>
                 </form>}
             </div>

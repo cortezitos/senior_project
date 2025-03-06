@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosClient from "../axios-client";
+import { Link } from "react-router-dom";
 
 export default function Phonebook() {
     const [users, setUsers] = useState([]);
@@ -64,7 +65,11 @@ export default function Phonebook() {
                             {users.map((u) => (
                                 <tr key={u.id}>
                                     <td>{u.id}</td>
-                                    <td>{u.name}</td>
+                                    <td>
+                                        <Link to={`/profile/${u.id}`} className="name-link">
+                                            {u.name}
+                                        </Link>
+                                    </td>
                                     <td>{u.email}</td>
                                     <td>{u.role}</td>
                                 </tr>
