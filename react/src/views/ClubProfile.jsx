@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axiosClient from "../axios-client";
+import { useStateContext } from "../contexts/ContextProvider";
 
 export default function ClubProfile() {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const { user: currentUser } = useStateContext();
     const [club, setClub] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -21,6 +24,16 @@ export default function ClubProfile() {
             .catch(() => {
                 setLoading(false);
             });
+    };
+
+    const isPresident = () => {
+        if (!club || !currentUser) return false;
+        const membership = club.members.find(member => member.id === currentUser.id);
+        return membership && membership.role === 'president';
+    };
+
+    const onMakePost = () => {
+        navigate(`/clubs/${id}/post/new`);
     };
 
     if (loading) {
@@ -54,6 +67,12 @@ export default function ClubProfile() {
                                 Created: {new Date(club.created_at).toLocaleDateString()}
                             </span>
                         </div>
+                        {isPresident() && (
+                            <button onClick={onMakePost} className="btn-make-post">
+                                <i className="fas fa-pen-to-square"></i>
+                                Make a Post
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
