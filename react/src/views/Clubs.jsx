@@ -58,7 +58,11 @@ export default function Clubs() {
                                         className="club-logo"
                                     />
                                 )}
-                                <h2>{club.name}</h2>
+                                <h2>
+                                    <Link to={`/clubs/${club.id}`} className="name-link">
+                                        {club.name}
+                                    </Link>
+                                </h2>
                                 <p className="club-description">{club.description}</p>
                                 <div className="club-stats">
                                     <span>{club.members_count} members</span>

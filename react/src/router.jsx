@@ -15,6 +15,7 @@ import Clubs from "./views/Clubs.jsx";
 import EditClubs from "./views/EditClubs.jsx";
 import ClubForm from "./views/ClubForm.jsx";
 import ClubMemberForm from "./views/ClubMemberForm.jsx";
+import ClubProfile from "./views/ClubProfile.jsx";
 
 const router = createBrowserRouter([
 	{
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
 			{
 				path: '/clubs',
 				element: <Clubs />
+			},
+			{
+				path: '/clubs/:id',
+				element: <ClubProfile />
 			},
 			{
 				path: '/profile',
