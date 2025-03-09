@@ -57,15 +57,28 @@ export default function PostForm() {
         setErrors(null);
         setLoading(true);
 
-        axiosClient.post('/posts', post)
-            .then(() => {
+        axiosClient.post('/pending-posts', post)
+            .then(({ data }) => {
+                // Show success message
+                alert('Post submitted successfully and is awaiting approval');
                 navigate(`/clubs/${clubId}`);
             })
             .catch(err => {
                 setLoading(false);
                 const response = err.response;
                 if (response && response.status === 422) {
+                    // Validation errors
                     setErrors(response.data.errors);
+                } else if (response && response.status === 403) {
+                    // Authorization error
+                    setErrors({
+                        authorization: ['You are not authorized to create posts for this club.']
+                    });
+                } else {
+                    // General error
+                    setErrors({
+                        general: ['An error occurred while creating the post. Please try again.']
+                    });
                 }
             });
     };

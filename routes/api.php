@@ -19,6 +19,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/clubs/{club}/members', [\App\Http\Controllers\Api\ClubMemberController::class, 'store']);
     Route::put('/clubs/{club}/members/{userId}', [\App\Http\Controllers\Api\ClubMemberController::class, 'update']);
     Route::delete('/clubs/{club}/members/{userId}', [\App\Http\Controllers\Api\ClubMemberController::class, 'destroy']);
+
+    // Pending posts routes
+    Route::apiResource('/pending-posts', \App\Http\Controllers\Api\PendingPostController::class);
 });
 
 

@@ -17,6 +17,7 @@ import ClubForm from "./views/ClubForm.jsx";
 import ClubMemberForm from "./views/ClubMemberForm.jsx";
 import ClubProfile from "./views/ClubProfile.jsx";
 import PostForm from "./views/PostForm.jsx";
+import PendingPosts from "./views/PendingPosts.jsx";
 
 const router = createBrowserRouter([
 	{
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
 					{
 						path: '/manage-clubs/:id/members',
 						element: <ClubMemberForm />
+					},
+					{
+						path: '/pending-posts',
+						element: <PendingPosts />
 					}
 				]
 			}

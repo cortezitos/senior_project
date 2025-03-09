@@ -917,3 +917,92 @@
 .btn-cancel:hover {
     background-color: #cbd5e0;
 }
+
+/* Pending Posts Styles */
+.post-content {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+}
+
+.post-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+    margin: 1.5rem 0 1rem;
+    font-weight: 600;
+}
+
+.post-content ul,
+.post-content ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.post-content blockquote {
+    border-left: 4px solid #e9ecef;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: #6c757d;
+}
+
+.post-content pre {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+/* Post List Styles */
+.post-list {
+    padding: 0;
+}
+
+.post-item {
+    padding: 15px;
+    border-bottom: 1px solid #edf2f7;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.post-item:hover {
+    background-color: #f8f9fa;
+}
+
+.post-item.active {
+    background-color: #5b08a7;
+    color: white;
+}
+
+.post-item.active small {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.post-item h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.post-item small {
+    color: #718096;
+    font-size: 0.9em;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #2d3748;
+}
