@@ -7,6 +7,7 @@ use App\Http\Requests\StorePendingPostRequest;
 use App\Http\Resources\PendingPostResource;
 use App\Models\PendingPost;
 use App\Models\PostImage;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -102,6 +103,26 @@ class PendingPostController extends Controller
 
         $pendingPost->update($validated);
 
+        // If post is approved, create a published post
+        if ($validated['status'] === 'approved') {
+            // Create new post in the posts table
+            $post = Post::create([
+                'club_id' => $pendingPost->club_id,
+                'user_id' => $pendingPost->user_id,
+                'title' => $pendingPost->title,
+                'content' => $pendingPost->content,
+                'published_at' => now(),
+            ]);
+
+            // Update the post_images to link to the new post
+            $images = PostImage::where('pending_post_id', $pendingPost->id)->get();
+            foreach ($images as $image) {
+                $image->update([
+                    'post_id' => $post->id
+                ]);
+            }
+        }
+
         return new PendingPostResource($pendingPost);
     }
 
@@ -110,6 +131,29 @@ class PendingPostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $pendingPost = PendingPost::findOrFail($id);
+        
+        // Check if post exists and has pending status
+        if ($pendingPost->status !== 'pending') {
+            return response()->json([
+                'message' => 'Only pending posts can be discarded'
+            ], 403);
+        }
+        
+        // Delete related images from storage if they exist
+        $images = PostImage::where('pending_post_id', $id)->get();
+        foreach ($images as $image) {
+            if (Storage::disk('public')->exists($image->path)) {
+                Storage::disk('public')->delete($image->path);
+            }
+            $image->delete();
+        }
+        
+        // Delete the post
+        $pendingPost->delete();
+        
+        return response()->json([
+            'message' => 'Post discarded successfully'
+        ]);
     }
 }

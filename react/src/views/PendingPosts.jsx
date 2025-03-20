@@ -7,6 +7,8 @@ export default function PendingPosts() {
     const [posts, setPosts] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
     const [error, setError] = useState('');
+    const [actionLoading, setActionLoading] = useState(false);
+    const [notification, setNotification] = useState({show: false, message: '', type: ''});
     const [pagination, setPagination] = useState({
         current_page: 1,
         total: 0,
@@ -16,6 +18,16 @@ export default function PendingPosts() {
     useEffect(() => {
         getPosts();
     }, []);
+
+    // Auto-hide notification after 3 seconds
+    useEffect(() => {
+        if (notification.show) {
+            const timer = setTimeout(() => {
+                setNotification({...notification, show: false});
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [notification]);
 
     const getPosts = (page = 1) => {
         setLoading(true);
@@ -39,6 +51,80 @@ export default function PendingPosts() {
 
     const onPageClick = (page) => {
         getPosts(page);
+    };
+
+    // Function to accept a post
+    const handleAcceptPost = () => {
+        if (!selectedPost) return;
+        
+        if (!confirm(`Are you sure you want to accept the post "${selectedPost.title}"?`)) {
+            return;
+        }
+        
+        setActionLoading(true);
+        
+        // Make API call to approve the post
+        axiosClient.put(`/pending-posts/${selectedPost.id}`, {
+            status: 'approved'
+        })
+            .then(response => {
+                console.log('Post accepted:', response.data);
+                
+                // Remove the post from the list
+                setPosts(posts.filter(post => post.id !== selectedPost.id));
+                setNotification({
+                    show: true,
+                    message: 'Post has been accepted and published successfully',
+                    type: 'success'
+                });
+                setSelectedPost(null);
+                setActionLoading(false);
+            })
+            .catch(error => {
+                console.error('Error accepting post:', error);
+                setNotification({
+                    show: true,
+                    message: 'Failed to accept post: ' + (error.response?.data?.message || 'Unknown error'),
+                    type: 'warning'
+                });
+                setActionLoading(false);
+            });
+    };
+
+    // Function to discard/reject a post
+    const handleDiscardPost = () => {
+        if (!selectedPost) return;
+        
+        if (!confirm(`Are you sure you want to discard the post "${selectedPost.title}"?`)) {
+            return;
+        }
+        
+        setActionLoading(true);
+        
+        // Make API call to delete the post
+        axiosClient.delete(`/pending-posts/${selectedPost.id}`)
+            .then(response => {
+                console.log('Post discarded:', response.data);
+                
+                // Remove the post from the list
+                setPosts(posts.filter(post => post.id !== selectedPost.id));
+                setNotification({
+                    show: true,
+                    message: 'Post has been discarded successfully',
+                    type: 'success'
+                });
+                setSelectedPost(null);
+                setActionLoading(false);
+            })
+            .catch(error => {
+                console.error('Error discarding post:', error);
+                setNotification({
+                    show: true,
+                    message: 'Failed to discard post: ' + (error.response?.data?.message || 'Unknown error'),
+                    type: 'warning'
+                });
+                setActionLoading(false);
+            });
     };
 
     // Function to process HTML content and handle images
@@ -66,6 +152,11 @@ export default function PendingPosts() {
         <div className="animated fadeInDown">
             <h1>Pending Posts</h1>
             {error && <div className="alert alert-danger">{error}</div>}
+            {notification.show && (
+                <div className={`alert alert-${notification.type}`}>
+                    {notification.message}
+                </div>
+            )}
             <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
                 <div style={{ flex: '0 0 350px' }}>
                     <div className="card">
@@ -125,8 +216,21 @@ export default function PendingPosts() {
                                     </div>
                                 </div>
                                 <div className="card-footer">
-                                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
-                                        {/* Buttons will be implemented later */}
+                                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '15px' }}>
+                                        <button 
+                                            className="btn-delete" 
+                                            onClick={handleDiscardPost}
+                                            disabled={actionLoading}
+                                        >
+                                            {actionLoading ? 'Processing...' : 'Discard'}
+                                        </button>
+                                        <button 
+                                            className="btn-edit" 
+                                            onClick={handleAcceptPost}
+                                            disabled={actionLoading}
+                                        >
+                                            {actionLoading ? 'Processing...' : 'Accept'}
+                                        </button>
                                     </div>
                                 </div>
                             </>

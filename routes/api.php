@@ -22,6 +22,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Pending posts routes
     Route::apiResource('/pending-posts', \App\Http\Controllers\Api\PendingPostController::class);
+    
+    // Published posts routes
+    Route::apiResource('/posts', \App\Http\Controllers\Api\PostController::class);
 });
 
 

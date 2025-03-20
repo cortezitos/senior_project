@@ -11,11 +11,17 @@ class PostImage extends Model
 
     protected $fillable = [
         'pending_post_id',
+        'post_id',
         'path'
     ];
 
     public function pendingPost()
     {
         return $this->belongsTo(PendingPost::class);
+    }
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
     }
 }
