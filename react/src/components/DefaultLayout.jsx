@@ -38,10 +38,13 @@ export default function DefaultLayout() {
 						<Link to="/users">Users</Link>
 						<Link to="/manage-clubs">Manage Clubs</Link>
 						<Link to="/pending-posts">Pending Posts</Link>
+						<Link to="/rooms">Manage Rooms</Link>
+						<Link to="/room-bookings">Room Bookings</Link>
 					</>
 				)}
 				<Link to="/clubs">Clubs</Link>
 				<Link to="/phonebook">Phonebook</Link>
+				<Link to="/public-rooms">Room Availability</Link>
 			</nav>
 			<div className="user-info">
 				<Link to="/profile">{user.name}</Link>

@@ -22,5 +22,9 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin'
         ]);
 
+        // Call the RoomSeeder
+        $this->call([
+            RoomSeeder::class,
+        ]);
     }
 }

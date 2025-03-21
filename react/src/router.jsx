@@ -18,6 +18,11 @@ import ClubMemberForm from "./views/ClubMemberForm.jsx";
 import ClubProfile from "./views/ClubProfile.jsx";
 import PostForm from "./views/PostForm.jsx";
 import PendingPosts from "./views/PendingPosts.jsx";
+import Rooms from "./views/Rooms.jsx";
+import RoomForm from "./views/RoomForm.jsx";
+import PublicRooms from "./views/PublicRooms.jsx";
+import RoomBookingForm from "./views/RoomBookingForm.jsx";
+import PendingRoomBookings from "./views/PendingRoomBookings.jsx";
 
 const router = createBrowserRouter([
 	{
@@ -49,12 +54,20 @@ const router = createBrowserRouter([
 				element: <PostForm />
 			},
 			{
+				path: '/clubs/:clubId/book-room',
+				element: <RoomBookingForm />
+			},
+			{
 				path: '/profile',
 				element: <Profile />
 			},
 			{
 				path: '/profile/:id',
 				element: <Profile />
+			},
+			{
+				path: '/public-rooms',
+				element: <PublicRooms />
 			},
 			{
 				element: <AdminLayout />,
@@ -90,6 +103,22 @@ const router = createBrowserRouter([
 					{
 						path: '/pending-posts',
 						element: <PendingPosts />
+					},
+					{
+						path: '/rooms',
+						element: <Rooms />
+					},
+					{
+						path: '/rooms/new',
+						element: <RoomForm key="roomCreate" />
+					},
+					{
+						path: '/rooms/:id/edit',
+						element: <RoomForm key="roomUpdate" />
+					},
+					{
+						path: '/room-bookings',
+						element: <PendingRoomBookings />
 					}
 				]
 			}

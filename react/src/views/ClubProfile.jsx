@@ -35,6 +35,10 @@ export default function ClubProfile() {
     const onMakePost = () => {
         navigate(`/clubs/${id}/post/new`);
     };
+    
+    const onBookRoom = () => {
+        navigate(`/clubs/${id}/book-room`);
+    };
 
     if (loading) {
         return <div className="text-center">Loading...</div>;
@@ -68,10 +72,16 @@ export default function ClubProfile() {
                             </span>
                         </div>
                         {isPresident() && (
-                            <button onClick={onMakePost} className="btn-make-post">
-                                <i className="fas fa-pen-to-square"></i>
-                                Make a Post
-                            </button>
+                            <div className="president-actions">
+                                <button onClick={onMakePost} className="btn-make-post">
+                                    <i className="fas fa-pen-to-square"></i>
+                                    Make a Post
+                                </button>
+                                <button onClick={onBookRoom} className="btn-book-room">
+                                    <i className="fas fa-calendar-plus"></i>
+                                    Book a Room
+                                </button>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -141,6 +151,32 @@ export default function ClubProfile() {
                     </div>
                 </div>
             </div>
+            
+            <style jsx>{`
+                .president-actions {
+                    display: flex;
+                    gap: 10px;
+                    margin-top: 15px;
+                }
+                
+                .btn-book-room {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    background-color: #5b08a7;
+                    color: white;
+                    border: none;
+                    padding: 8px 16px;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    cursor: pointer;
+                    transition: background-color 0.2s;
+                }
+                
+                .btn-book-room:hover {
+                    background-color: #4a0696;
+                }
+            `}</style>
         </div>
     );
 }

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\RoomController;
+use App\Http\Controllers\Api\RoomBookingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +27,14 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // Published posts routes
     Route::apiResource('/posts', \App\Http\Controllers\Api\PostController::class);
+    
+    // Room management routes
+    Route::apiResource('/rooms', RoomController::class);
+    Route::get('/rooms/{roomId}/bookings', [RoomController::class, 'getBookings']);
+    
+    // Room booking routes
+    Route::apiResource('/room-bookings', RoomBookingController::class);
+    Route::get('/clubs/{clubId}/bookings', [RoomBookingController::class, 'getClubBookings']);
 });
 
 
