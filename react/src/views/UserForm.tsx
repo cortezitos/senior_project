@@ -37,7 +37,7 @@ export default function UserForm() {
         }, []);
     }
 
-    const onSubmit = (ev) => {
+    const onSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         if (user.id) {
             axiosClient.put(`/users/${user.id}`, user)
@@ -114,7 +114,7 @@ export default function UserForm() {
                                     onChange={(ev) => setUser({...user, major: ev.target.value})}
                                 >
                                     <option value="">Select Major</option>
-                                    {majors[user.school].map((major) => (
+                                    {majors[user.school as keyof typeof majors].map((major) => (
                                         <option key={major} value={major}>{major}</option>
                                     ))}
                                 </select>

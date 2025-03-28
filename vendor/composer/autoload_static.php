@@ -207,9 +207,9 @@ class ComposerStaticInit626b9e7ddd47fb7eff9aaa53cce0c9ad
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
-            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
         ),
         'Whoops\\' => 
         array (
@@ -593,10 +593,31 @@ class ComposerStaticInit626b9e7ddd47fb7eff9aaa53cce0c9ad
     );
 
     public static $classMap = array (
+        'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Api\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AuthController.php',
+        'App\\Http\\Controllers\\Api\\ClubController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ClubController.php',
+        'App\\Http\\Controllers\\Api\\ClubMemberController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ClubMemberController.php',
+        'App\\Http\\Controllers\\Api\\PendingPostController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PendingPostController.php',
+        'App\\Http\\Controllers\\Api\\PostController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PostController.php',
+        'App\\Http\\Controllers\\Api\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Requests\\ClubMemberRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ClubMemberRequest.php',
         'App\\Http\\Requests\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/LoginRequest.php',
         'App\\Http\\Requests\\SignupRequest' => __DIR__ . '/../..' . '/app/Http/Requests/SignupRequest.php',
+        'App\\Http\\Requests\\StoreClubRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreClubRequest.php',
+        'App\\Http\\Requests\\StorePendingPostRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StorePendingPostRequest.php',
+        'App\\Http\\Requests\\StoreUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreUserRequest.php',
+        'App\\Http\\Requests\\UpdateClubRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateClubRequest.php',
+        'App\\Http\\Requests\\UpdateUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateUserRequest.php',
+        'App\\Http\\Resources\\ClubResource' => __DIR__ . '/../..' . '/app/Http/Resources/ClubResource.php',
+        'App\\Http\\Resources\\PendingPostResource' => __DIR__ . '/../..' . '/app/Http/Resources/PendingPostResource.php',
+        'App\\Http\\Resources\\PostResource' => __DIR__ . '/../..' . '/app/Http/Resources/PostResource.php',
+        'App\\Http\\Resources\\UserResource' => __DIR__ . '/../..' . '/app/Http/Resources/UserResource.php',
+        'App\\Models\\Club' => __DIR__ . '/../..' . '/app/Models/Club.php',
+        'App\\Models\\ClubMember' => __DIR__ . '/../..' . '/app/Models/ClubMember.php',
+        'App\\Models\\PendingPost' => __DIR__ . '/../..' . '/app/Models/PendingPost.php',
+        'App\\Models\\Post' => __DIR__ . '/../..' . '/app/Models/Post.php',
+        'App\\Models\\PostImage' => __DIR__ . '/../..' . '/app/Models/PostImage.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
