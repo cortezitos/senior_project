@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../contexts/ContextProvider";
+import { Club, Member } from "../types";
 
 export default function ClubProfile() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { user: currentUser } = useStateContext();
-    const [club, setClub] = useState(null);
+    const [club, setClub] = useState<Club | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -16,8 +17,9 @@ export default function ClubProfile() {
 
     const getClub = () => {
         setLoading(true);
-        axiosClient.get(`/clubs/${id}?with_members=true`)
-            .then(({ data }) => {
+        axiosClient
+            .get(`/clubs/${id}?with_members=true`)
+            .then(({ data }: { data: Club }) => {
                 setClub(data);
                 setLoading(false);
             })
@@ -28,8 +30,10 @@ export default function ClubProfile() {
 
     const isPresident = () => {
         if (!club || !currentUser) return false;
-        const membership = club.members.find(member => member.id === currentUser.id);
-        return membership && membership.role === 'president';
+        const membership = club.members.find(
+            (member: Member) => member.id === currentUser.id
+        );
+        return membership && membership.role === "president";
     };
 
     const onMakePost = () => {
@@ -49,9 +53,9 @@ export default function ClubProfile() {
             <div className="club-header-banner">
                 <div className="club-header-content">
                     {club.logo_url && (
-                        <img 
-                            src={club.logo_url} 
-                            alt={club.name} 
+                        <img
+                            src={club.logo_url}
+                            alt={club.name}
                             className="club-profile-logo"
                         />
                     )}
@@ -64,11 +68,15 @@ export default function ClubProfile() {
                             </span>
                             <span className="stat-item">
                                 <i className="fas fa-calendar"></i>
-                                Created: {new Date(club.created_at).toLocaleDateString()}
+                                Created:{" "}
+                                {new Date(club.created_at).toLocaleDateString()}
                             </span>
                         </div>
                         {isPresident() && (
-                            <button onClick={onMakePost} className="btn-make-post">
+                            <button
+                                onClick={onMakePost}
+                                className="btn-make-post"
+                            >
                                 <i className="fas fa-pen-to-square"></i>
                                 Make a Post
                             </button>
@@ -76,7 +84,7 @@ export default function ClubProfile() {
                     </div>
                 </div>
             </div>
-            
+
             <div className="club-content">
                 <div className="club-info">
                     <div className="section-header">
@@ -100,19 +108,31 @@ export default function ClubProfile() {
                                 </h3>
                                 <ul className="members-list">
                                     {club.members
-                                        .filter(member => member.role !== 'member')
-                                        .map(member => (
-                                            <li key={member.id} className="member-item">
+                                        .filter(
+                                            (member: Member) =>
+                                                member.role !== "member"
+                                        )
+                                        .map((member: Member) => (
+                                            <li
+                                                key={member.id}
+                                                className="member-item"
+                                            >
                                                 <div className="member-info">
-                                                    <span className="member-name">{member.name}</span>
-                                                    <span className="member-role">{member.role}</span>
+                                                    <span className="member-name">
+                                                        {member.name}
+                                                    </span>
+                                                    <span className="member-role">
+                                                        {member.role}
+                                                    </span>
                                                 </div>
                                                 <span className="member-joined">
-                                                    Joined {new Date(member.joined_at).toLocaleDateString()}
+                                                    Joined{" "}
+                                                    {new Date(
+                                                        member.joined_at
+                                                    ).toLocaleDateString()}
                                                 </span>
                                             </li>
-                                        ))
-                                    }
+                                        ))}
                                 </ul>
                             </div>
 
@@ -123,18 +143,28 @@ export default function ClubProfile() {
                                 </h3>
                                 <ul className="members-list">
                                     {club.members
-                                        .filter(member => member.role === 'member')
-                                        .map(member => (
-                                            <li key={member.id} className="member-item">
+                                        .filter(
+                                            (member: Member) =>
+                                                member.role === "member"
+                                        )
+                                        .map((member: Member) => (
+                                            <li
+                                                key={member.id}
+                                                className="member-item"
+                                            >
                                                 <div className="member-info">
-                                                    <span className="member-name">{member.name}</span>
+                                                    <span className="member-name">
+                                                        {member.name}
+                                                    </span>
                                                 </div>
                                                 <span className="member-joined">
-                                                    Joined {new Date(member.joined_at).toLocaleDateString()}
+                                                    Joined{" "}
+                                                    {new Date(
+                                                        member.joined_at
+                                                    ).toLocaleDateString()}
                                                 </span>
                                             </li>
-                                        ))
-                                    }
+                                        ))}
                                 </ul>
                             </div>
                         </div>

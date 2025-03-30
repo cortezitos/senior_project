@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axiosClient from "../axios-client";
+import { Club, Member } from "../types";
 
 export default function ClubMemberForm() {
     const { id } = useParams();
-    const navigate = useNavigate();
-    const [club, setClub] = useState(null);
+    const [club, setClub] = useState<Club | null>(null);
     const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState(null);
-    const [members, setMembers] = useState([]);
+    const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
+    const [members, setMembers] = useState<Member[]>([]);
     const [newMember, setNewMember] = useState({
-        user_id: '',
-        role: 'member'
+        user_id: "",
+        role: "member",
     });
 
     useEffect(() => {
@@ -20,8 +20,9 @@ export default function ClubMemberForm() {
 
     const getClub = () => {
         setLoading(true);
-        axiosClient.get(`/clubs/${id}?with_members=true`)
-            .then(({ data }) => {
+        axiosClient
+            .get(`/clubs/${id}?with_members=true`)
+            .then(({ data }: { data: Club }) => {
                 setClub(data);
                 setMembers(data.members || []);
                 setLoading(false);
@@ -31,21 +32,22 @@ export default function ClubMemberForm() {
             });
     };
 
-    const onSubmit = (ev) => {
+    const onSubmit = (ev: React.FormEvent) => {
         ev.preventDefault();
         setErrors(null);
-        
-        axiosClient.post(`/clubs/${id}/members`, newMember)
+
+        axiosClient
+            .post(`/clubs/${id}/members`, newMember)
             .then(() => {
                 // Refresh the members list
                 getClub();
                 // Reset the form
                 setNewMember({
-                    user_id: '',
-                    role: 'member'
+                    user_id: "",
+                    role: "member",
                 });
             })
-            .catch(err => {
+            .catch((err: any) => {
                 const response = err.response;
                 if (response && response.status === 422) {
                     setErrors(response.data.errors);
@@ -53,19 +55,19 @@ export default function ClubMemberForm() {
             });
     };
 
-    const onRemoveMember = (memberId) => {
-        if (!window.confirm('Are you sure you want to remove this member?')) {
+    const onRemoveMember = (memberId: number) => {
+        if (!window.confirm("Are you sure you want to remove this member?")) {
             return;
         }
 
-        axiosClient.delete(`/clubs/${id}/members/${memberId}`)
-            .then(() => {
-                getClub();
-            });
+        axiosClient.delete(`/clubs/${id}/members/${memberId}`).then(() => {
+            getClub();
+        });
     };
 
-    const onUpdateRole = (memberId, newRole) => {
-        axiosClient.put(`/clubs/${id}/members/${memberId}`, { role: newRole })
+    const onUpdateRole = (memberId: number, newRole: string) => {
+        axiosClient
+            .put(`/clubs/${id}/members/${memberId}`, { role: newRole })
             .then(() => {
                 getClub();
             });
@@ -99,19 +101,34 @@ export default function ClubMemberForm() {
                                     <td>
                                         <select
                                             value={member.role}
-                                            onChange={(ev) => onUpdateRole(member.id, ev.target.value)}
+                                            onChange={(ev) =>
+                                                onUpdateRole(
+                                                    member.id,
+                                                    ev.target.value
+                                                )
+                                            }
                                         >
-                                            <option value="member">Member</option>
-                                            <option value="president">President</option>
-                                            <option value="event-manager">Event Manager</option>
-                                            <option value="treasury">Treasury</option>
+                                            <option value="member">
+                                                Member
+                                            </option>
+                                            <option value="president">
+                                                President
+                                            </option>
+                                            <option value="event-manager">
+                                                Event Manager
+                                            </option>
+                                            <option value="treasury">
+                                                Treasury
+                                            </option>
                                             <option value="pr">PR</option>
                                         </select>
                                     </td>
                                     <td>{member.created_at}</td>
                                     <td>
                                         <button
-                                            onClick={() => onRemoveMember(member.id)}
+                                            onClick={() =>
+                                                onRemoveMember(member.id)
+                                            }
                                             className="btn-delete"
                                         >
                                             Remove
@@ -125,21 +142,33 @@ export default function ClubMemberForm() {
 
                 <div className="add-member-section">
                     <h2>Add New Member</h2>
-                    {errors && <div className="alert">
-                        {Object.keys(errors).map(key => (
-                            <p key={key}>{errors[key][0]}</p>
-                        ))}
-                    </div>}
+                    {errors && (
+                        <div className="alert">
+                            {Object.keys(errors).map((key) => (
+                                <p key={key}>{errors[key][0]}</p>
+                            ))}
+                        </div>
+                    )}
                     <form onSubmit={onSubmit}>
                         <input
                             type="number"
                             value={newMember.user_id}
-                            onChange={ev => setNewMember({...newMember, user_id: ev.target.value})}
+                            onChange={(ev) =>
+                                setNewMember({
+                                    ...newMember,
+                                    user_id: ev.target.value,
+                                })
+                            }
                             placeholder="User ID"
                         />
                         <select
                             value={newMember.role}
-                            onChange={ev => setNewMember({...newMember, role: ev.target.value})}
+                            onChange={(ev) =>
+                                setNewMember({
+                                    ...newMember,
+                                    role: ev.target.value,
+                                })
+                            }
                         >
                             <option value="member">Member</option>
                             <option value="president">President</option>
@@ -147,10 +176,12 @@ export default function ClubMemberForm() {
                             <option value="treasury">Treasury</option>
                             <option value="pr">PR</option>
                         </select>
-                        <button type="submit" className="btn">Add Member</button>
+                        <button type="submit" className="btn">
+                            Add Member
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     );
-} 
+}

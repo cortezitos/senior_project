@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import axiosClient from "../axios-client";
 import { Link } from "react-router-dom";
+import { Club, PaginationMeta, ApiResponse } from "../types";
 
 export default function EditClubs() {
-    const [clubs, setClubs] = useState([]);
+    const [clubs, setClubs] = useState<Club[]>([]);
     const [loading, setLoading] = useState(false);
-    const [pagination, setPagination] = useState({
+    const [pagination, setPagination] = useState<PaginationMeta>({
         current_page: 1,
         total: 0,
-        last_page: 1
+        last_page: 1,
     });
 
     useEffect(() => {
@@ -17,14 +18,15 @@ export default function EditClubs() {
 
     const getClubs = (page = 1) => {
         setLoading(true);
-        axiosClient.get(`/clubs?page=${page}&with_members=true`)
+        axiosClient
+            .get(`/clubs?page=${page}&with_members=true`)
             .then(({ data }) => {
                 setLoading(false);
                 setClubs(data.data);
                 setPagination({
                     current_page: data.meta.current_page,
                     total: data.meta.total,
-                    last_page: data.meta.last_page
+                    last_page: data.meta.last_page,
                 });
             })
             .catch(() => {
@@ -32,25 +34,36 @@ export default function EditClubs() {
             });
     };
 
-    const onDelete = (club) => {
-        if (!window.confirm(`Are you sure you want to delete the club "${club.name}"?`)) {
+    const onDelete = (club: Club) => {
+        if (
+            !window.confirm(
+                `Are you sure you want to delete the club "${club.name}"?`
+            )
+        ) {
             return;
         }
-        axiosClient.delete(`/clubs/${club.id}`)
-            .then(() => {
-                getClubs(pagination.current_page);
-            });
+        axiosClient.delete(`/clubs/${club.id}`).then(() => {
+            getClubs(pagination.current_page);
+        });
     };
 
-    const onPageClick = (page) => {
+    const onPageClick = (page: number) => {
         getClubs(page);
     };
 
     return (
         <div>
-            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                }}
+            >
                 <h1>Manage Clubs</h1>
-                <Link to="/manage-clubs/new" className="btn-add">Add new club</Link>
+                <Link to="/manage-clubs/new" className="btn-add">
+                    Add new club
+                </Link>
             </div>
             <div className="card animated fadeInDown">
                 <table>
@@ -66,7 +79,7 @@ export default function EditClubs() {
                     {loading && (
                         <tbody>
                             <tr>
-                                <td colSpan="5" className="text-center">
+                                <td colSpan={5} className="text-center">
                                     Loading...
                                 </td>
                             </tr>
@@ -78,18 +91,36 @@ export default function EditClubs() {
                                 <tr key={club.id}>
                                     <td>{club.id}</td>
                                     <td>
-                                        <Link to={`/clubs/${club.id}`} className="name-link">
+                                        <Link
+                                            to={`/clubs/${club.id}`}
+                                            className="name-link"
+                                        >
                                             {club.name}
                                         </Link>
                                     </td>
                                     <td>{club.members_count}</td>
                                     <td>{club.created_at}</td>
                                     <td>
-                                        <Link className="btn-edit" to={`/manage-clubs/${club.id}/edit`}>Edit</Link>
+                                        <Link
+                                            className="btn-edit"
+                                            to={`/manage-clubs/${club.id}/edit`}
+                                        >
+                                            Edit
+                                        </Link>
                                         &nbsp;
-                                        <Link className="btn-members" to={`/manage-clubs/${club.id}/members`}>Members</Link>
+                                        <Link
+                                            className="btn-members"
+                                            to={`/manage-clubs/${club.id}/members`}
+                                        >
+                                            Members
+                                        </Link>
                                         &nbsp;
-                                        <button onClick={() => onDelete(club)} className="btn-delete">Delete</button>
+                                        <button
+                                            onClick={() => onDelete(club)}
+                                            className="btn-delete"
+                                        >
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -98,10 +129,17 @@ export default function EditClubs() {
                 </table>
                 {!loading && pagination.last_page > 1 && (
                     <div className="pagination">
-                        {Array.from({length: pagination.last_page}, (_, i) => i + 1).map((page) => (
-                            <button 
-                                key={page} 
-                                className={`pagination-button ${pagination.current_page === page ? 'active' : ''}`}
+                        {Array.from(
+                            { length: pagination.last_page },
+                            (_, i) => i + 1
+                        ).map((page) => (
+                            <button
+                                key={page}
+                                className={`pagination-button ${
+                                    pagination.current_page === page
+                                        ? "active"
+                                        : ""
+                                }`}
                                 onClick={() => onPageClick(page)}
                             >
                                 {page}

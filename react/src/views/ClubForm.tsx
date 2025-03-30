@@ -9,15 +9,16 @@ export default function ClubForm() {
     const [errors, setErrors] = useState(null);
     const [club, setClub] = useState({
         id: null,
-        name: '',
-        description: '',
-        logo_url: ''
+        name: "",
+        description: "",
+        logo_url: "",
     });
 
     if (id) {
         useEffect(() => {
             setLoading(true);
-            axiosClient.get(`/clubs/${id}`)
+            axiosClient
+                .get(`/clubs/${id}`)
                 .then(({ data }) => {
                     setLoading(false);
                     setClub(data);
@@ -28,25 +29,27 @@ export default function ClubForm() {
         }, []);
     }
 
-    const onSubmit = (ev) => {
+    const onSubmit = (ev: React.FormEvent) => {
         ev.preventDefault();
         if (club.id) {
-            axiosClient.put(`/clubs/${club.id}`, club)
+            axiosClient
+                .put(`/clubs/${club.id}`, club)
                 .then(() => {
-                    navigate('/manage-clubs');
+                    navigate("/manage-clubs");
                 })
-                .catch(err => {
+                .catch((err) => {
                     const response = err.response;
                     if (response && response.status === 422) {
                         setErrors(response.data.errors);
                     }
                 });
         } else {
-            axiosClient.post('/clubs', club)
+            axiosClient
+                .post("/clubs", club)
                 .then(() => {
-                    navigate('/manage-clubs');
+                    navigate("/manage-clubs");
                 })
-                .catch(err => {
+                .catch((err) => {
                     const response = err.response;
                     if (response && response.status === 422) {
                         setErrors(response.data.errors);
@@ -60,31 +63,40 @@ export default function ClubForm() {
             {club.id && <h1>Update Club: {club.name}</h1>}
             {!club.id && <h1>New Club</h1>}
             <div className="card animated fadeInDown">
-                {loading && (
-                    <div className="text-center">Loading...</div>
+                {loading && <div className="text-center">Loading...</div>}
+                {errors && (
+                    <div className="alert">
+                        {Object.keys(errors).map((key) => (
+                            <p key={key}>{errors[key][0]}</p>
+                        ))}
+                    </div>
                 )}
-                {errors && <div className="alert">
-                    {Object.keys(errors).map(key => (
-                        <p key={key}>{errors[key][0]}</p>
-                    ))}
-                </div>}
                 {!loading && (
                     <form onSubmit={onSubmit}>
                         <input
                             value={club.name}
-                            onChange={ev => setClub({...club, name: ev.target.value})}
+                            onChange={(ev) =>
+                                setClub({ ...club, name: ev.target.value })
+                            }
                             placeholder="Club Name"
                         />
                         <textarea
                             value={club.description}
-                            onChange={ev => setClub({...club, description: ev.target.value})}
+                            onChange={(ev) =>
+                                setClub({
+                                    ...club,
+                                    description: ev.target.value,
+                                })
+                            }
                             placeholder="Club Description"
-                            rows="5"
+                            rows={5}
                             className="form-textarea"
                         />
                         <input
                             value={club.logo_url}
-                            onChange={ev => setClub({...club, logo_url: ev.target.value})}
+                            onChange={(ev) =>
+                                setClub({ ...club, logo_url: ev.target.value })
+                            }
                             placeholder="Logo URL"
                         />
                         <button className="btn">Save</button>
@@ -93,4 +105,4 @@ export default function ClubForm() {
             </div>
         </div>
     );
-} 
+}
